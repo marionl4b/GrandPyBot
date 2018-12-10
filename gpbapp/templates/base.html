@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{{url_for('.static', filename='images/favicon.ico')}}">
+
+    <!-- bootstrap stylesheet -->
+    <link rel="stylesheet" href="{{url_for('.static', filename='css/bootstrap.min.css')}}">
+
+
+    <!-- title -->
+      <title>Welcome to GrandPybot</title>
+</head> <!-- end head -->
+<body>
+
+    <!-- top navbar -->
+    <nav class="navbar">
+        <a class="navbar-brand" href="/index"><i class="fas fa-robot"></i> GrandPyBot</a>
+    </nav>
+
+    <!-- content <main> -->
+    {% block content %}{% endblock %}
+
+    <!-- footer -->
+    <footer class="footer">
+          <div class="container text-center">
+            <span>Marion Labarre © 2018 -
+                <a href="https://github.com/marionl4b/GrandPyBot"> <i class="fab fa-github-alt"></i></a>
+            </span>
+          </div>
+    </footer>
+
+   <!-- scripts -->
+    <script src="{{url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('.static', filename='js/jquery.min.js')}}"></script>
+
+
+</body><!-- end body -->
+</html>
