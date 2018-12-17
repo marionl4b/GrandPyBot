@@ -1,12 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <main role="main" class="container">
-        <div class="jumbotron">
-          <div class="container">
-            <h1 class="display-4">Hello World </h1>
-            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-          </div>
-        </div>
+    <main role="main">
+        <section id="tchat" class="container">
+            <div class="row gpb-message align-items-start">
+                <div class="col-1">
+                    <img class="avatar" src="{{ url_for('.static', filename='images/avatar_gpb.png') }}" alt="GrandPyBot Avatar">
+                </div>
+                <div class="col-11">
+                    <div class="bubble">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row user-message align-items-end">
+                <div class="col-11">
+                    <div class="bubble">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <img class="avatar" src="{{ url_for('.static', filename='images/avatar_user.png') }}" alt="GrandPyBot Avatar">
+                </div>
+            </div>
+        </section>
+        <section id="prompt">
+            <form action="POST">
+                <div class="row justify-content-center">
+                    <div class="col-7">
+                            <label class="sr-only" for="inputUserMessage">Name</label>
+                            <input type="text" class="form-control mb-2 mr-sm-2" id="inputUserMessage" placeholder="Tapez votre message">
+                        </div>
+                        <div class="col-1">
+                            <button type="submit" class="btn mb-2">Envoyer</button>
+                        </div>
+                </div>
+            </form>
+        </section>
     </main>
 {% endblock %}
