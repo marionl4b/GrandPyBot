@@ -1,0 +1,98 @@
+/*globals*/
+:root{
+  --main-bg-color : #f5f4f0;
+  --footer-bg-color : #333232;
+  --second-bg-color : #efeeeb;
+  --topbar-bg-color: #263d4f;
+  --text-color: #7e7e7e;
+  --footer-text-color: #6e6d6d;
+  --first-accent-color: #3698d2;
+  --second-accent-color: #7bbf92;
+  --second-accent-shadow: #73a986;
+}
+/*layout*/
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px; /* Margin bottom by footer height */
+  background-color: var(--main-bg-color);
+  color: var(--text-color) !important;
+  font-family: 'Roboto Slab', serif;
+}
+
+#prompt{ /*fix to footer*/
+  position: absolute;
+  bottom: 60px;
+  width: 100%;
+  background-color: var(--second-bg-color);
+  padding: 2em;
+}
+
+.footer { /*fix to bottom*/
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color:var(--footer-bg-color);
+  color: var(--footer-text-color);
+}
+
+/*navbar*/
+.navbar{
+  background-color: var(--topbar-bg-color);
+}
+#logo{
+  width: 150px;
+}
+
+/*main*/
+
+/*tchat*/
+#tchat{
+  margin-top: 2em;
+}
+#tchat .avatar{
+  width: 3em;
+}
+
+#tchat .bubble{
+  padding-top: 1em;
+}
+
+#tchat .bubble p{
+  display: inline-flex;
+  padding: 1em;
+  color: white;
+}
+
+#tchat .gpb-message .bubble p{
+  background-color: var(--first-accent-color);
+  border-radius: 0px 20px 20px 20px ;
+}
+
+#tchat .user-message .bubble{
+  text-align: right;
+}
+
+#tchat .user-message .bubble p{
+  background-color: var(--second-accent-color);
+  border-radius: 20px 20px 0 20px ;
+}
+
+/*prompt*/
+#prompt .btn{
+  color: white;
+  background-color: var(--second-accent-color);
+}
+#prompt .btn:hover{
+  background-color: var(--second-accent-shadow);
+}
+
+
+/*footer*/
+.fa-github-alt{
+  color: var(--footer-text-color);
+}
