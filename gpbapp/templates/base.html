@@ -27,7 +27,9 @@
 
     <!-- top navbar -->
     <nav class="navbar">
-        <a class="navbar-brand" href="/index"><img id="logo" src="{{ url_for('.static', filename='images/logo.png')}}" alt="GrandPyBot logo"/></a>
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+            <img id="logo" src="{{ url_for('.static', filename='images/logo.png')}}" alt="GrandPyBot logo"/>
+        </a>
     </nav>
 
     <!-- content <main> -->
@@ -45,9 +47,9 @@
    <!-- scripts -->
     <script src="{{url_for('.static', filename='js/bootstrap.min.js')}}"></script> <!-- bootstrap -->
     <script src="{{url_for('.static', filename='js/jquery.min.js')}}"></script> <!-- jquery -->
-    <script defer="" src="https://use.fontawesome.com/releases/v5.5.0/js/all.js"
+    <script crossorigin="anonymous" defer=""
             integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0"
-            crossorigin="anonymous"></script> <!-- fontawesome -->
+            src="https://use.fontawesome.com/releases/v5.5.0/js/all.js"></script> <!-- fontawesome -->
     <script src="{{url_for('.static', filename='js/myscripts.js')}}"></script> <!-- custom script -->
 
 </body><!-- end body -->

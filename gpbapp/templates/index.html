@@ -2,37 +2,19 @@
 
 {% block content %}
     <main role="main">
-        <section id="tchat" class="container">
-            <div class="row gpb-message align-items-start">
-                <div class="col-1">
-                    <img class="avatar" src="{{ url_for('.static', filename='images/avatar_gpb.png') }}" alt="GrandPyBot Avatar">
-                </div>
-                <div class="col-11">
-                    <div class="bubble">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row user-message align-items-end">
-                <div class="col-11">
-                    <div class="bubble">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-                <div class="col-1">
-                    <img class="avatar" src="{{ url_for('.static', filename='images/avatar_user.png') }}" alt="User Avatar">
-                </div>
-            </div>
+        <section id="chat" class="container">
+
         </section>
         <section id="prompt">
-            <form>
+            <form name="ajaxForm" action="index.html" method="post">
                 <div class="row justify-content-center">
                     <div class="col-7">
-                            <label class="sr-only" for="inputUserMessage">Votre Message</label>
-                            <input type="text" class="form-control mb-2 mr-sm-2" name="usermsg" id="inputUserMessage" placeholder="Tapez votre message">
+                            <label class="sr-only" for="textUserMessage">Votre Message</label>
+                            <input type="text" class="form-control mb-2 mr-sm-2" name="usermsg" id="textUserMessage"
+                                   placeholder="Tapez votre message">
                         </div>
                         <div class="col-1">
-                            <button type="submit" class="btn mb-2">Envoyer</button>
+                            <button type="button" class="btn mb-2">Envoyer</button>
                         </div>
                 </div>
             </form>

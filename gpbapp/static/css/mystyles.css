@@ -50,34 +50,34 @@ body {
 
 /*main*/
 
-/*tchat*/
-#tchat{
+/*chat*/
+#chat{
   margin-top: 2em;
 }
-#tchat .avatar{
+#chat .avatar{
   width: 3em;
 }
 
-#tchat .bubble{
+#chat .bubble{
   padding-top: 1em;
 }
 
-#tchat .bubble p{
+#chat .bubble p{
   display: inline-flex;
   padding: 1em;
   color: white;
 }
 
-#tchat .gpb-message .bubble p{
+#chat .gpb-message .bubble p{
   background-color: var(--first-accent-color);
   border-radius: 0px 20px 20px 20px ;
 }
 
-#tchat .user-message .bubble{
+#chat .user-message .bubble{
   text-align: right;
 }
 
-#tchat .user-message .bubble p{
+#chat .user-message .bubble p{
   background-color: var(--second-accent-color);
   border-radius: 20px 20px 0 20px ;
 }
