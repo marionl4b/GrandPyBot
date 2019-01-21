@@ -1,18 +1,13 @@
-from flask import render_template, request, json
+from flask import render_template, jsonify
 from gpbapp import app
 
 
 @app.route('/')
+@app.route('/index')
 def index():
     return render_template('index.html', title='Home')
 
 
 @app.route('/index', methods=['POST'])
 def user_message():
-    usermsg = request.form['usermsg']
-
-    # validate the received values
-    if usermsg:
-        return json.dumps({'status': 'OK', 'user message': usermsg})
-    else:
-        return json.dumps({'message': 'error'})
+    return jsonify({"status": "ok"})

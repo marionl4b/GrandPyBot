@@ -16,9 +16,8 @@ function addUserBubble(){
     let userBubble = document.createElement("div");// set new user bubble
     userBubble.classList.add("bubble");
     let userP = document.createElement("p");// set user message
-    let userMessage = form.elements.usermsg.value;
-    userP.textContent = userMessage;
-    console.log(userMessage);
+    userP.textContent = form.elements.usermsg.value;
+    // console.log(userMessage);
 
     userBubble.appendChild(userP); //add new user message to DOM
     userCol1.appendChild(userBubble);
@@ -43,9 +42,8 @@ function addGpbBubble(message){
     let gpbBubble = document.createElement("div");// set new gpb bubble
     gpbBubble.classList.add("bubble");
     let gpbP = document.createElement("p");// set gpb message
-    let gpbMessage = message;
-    gpbP.textContent = gpbMessage;
-    console.log(gpbMessage);
+    gpbP.textContent = message;
+    // console.log(gpbMessage);
 
     gpbBubble.appendChild(gpbP); //add new gpb message to DOM
     gpbCol1.appendChild(gpbAvatar);
@@ -55,66 +53,41 @@ function addGpbBubble(message){
     chat.appendChild(gpbRow);
 }
 
-// Execute call AJAX GET
-// takes in parameters URL and callback returned in case of success
-// function ajaxGet(url, callback) {
-//     let req = new XMLHttpRequest();
-//     req.open("GET", url);
-//     req.addEventListener("load", function () {
-//         if (req.status >= 200 && req.status < 400) {
-//             //callback with response
-//             callback(req.responseText);
-//         } else {
-//             console.error(req.status + " " + req.statusText + " " + url);
-//         }
-//     });
-//     req.addEventListener("error", function () {
-//         console.error("Erreur réseau avec l'URL " + url);
-//     });
-//     req.send(null);
-// }
-//
-// ajaxGet("/", function () {
-//     addGpbBubble("Bonjour Poussin, qu'est ce que je peux faire pour toi?");
-// });
-//
-// function ajaxForm(url, callback) {
-//     let req = new XMLHttpRequest();
-//     req.open("POST",url);
-//     req.addEventListener("load", function(){
-//         if(req.status >= 200 && req.status < 400){
-//             callback(req.responseText);
-//         }else{
-//             console.error(req.status + " " + req.statusText + " " + url);
-//         }
-//     })
-//     req.addEventListener("error", function (){
-//         console.error("network error with URL:" + url);
-//     });
-//     req.send(data);
-// }
-//
-// ajaxForm("/index", function () {
-//     form.addEventListener("submit", function (e) {
-//         addUserBubble();
-//         e.preventDefault();
-//     });
-// });
-jQuery(document).ready(function ($) {
-    addGpbBubble("Bonjour Poussin, qu'est ce que je peux faire pour toi?")
-    let usermsg = $('#textUserMessage').val();
-    $('button').on("click", function () {
-        $.ajax({
-            url: '/index',
-            data: $('form').serialize(),
-            type: 'POST',
-            success: function (response) {
-                console.log(response);
-                addUserBubble();
-            },
-            error: function (error) {
-                console.log(error);
+addGpbBubble("Bonjour Poussin, qu'est ce que je peux faire pour toi?");
+
+function ajaxPost(url, data, success, error, progress){
+    progress(true);
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+    xhr.setRequestHeader("content-type", "application/json; charset=UTF-8");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4){
+            if (xhr.status >=200 && xhr.status < 300){
+                success(data);
+                progress(false);
+            }else{
+                error(xhr.status, xhr.statusText)
             }
-        });
-    });
+        }
+    };
+    xhr.send((data));
+}
+
+document.getElementById("ajaxButton").addEventListener("click", function () {
+    let usermsg = document.getElementById("textUserMessage").value;
+    let data = JSON.stringify({userMessage: usermsg});
+    ajaxPost("/index", data, success, error, progress);
+
+    function success(data) {
+        addUserBubble();
+        console.log(data);
+    }
+
+    function error(err, txt) {
+        console.log(err, txt)
+    }
+
+    function progress(state) {
+
+    }
 });
