@@ -1,5 +1,7 @@
-from flask import render_template, jsonify
-from gpbapp import app
+from flask import render_template, jsonify, request
+from gpbapp import app, parser
+
+parser = parser.Parser()
 
 
 @app.route('/')
@@ -10,4 +12,9 @@ def index():
 
 @app.route('/index', methods=['POST'])
 def user_message():
-    return jsonify({"status": "ok"})
+    data = request.json
+    parser.check_usermsg(data)
+    if parser.error:
+        return jsonify({"parser": "error"})
+    else:
+        return jsonify({"parser": "ok"})

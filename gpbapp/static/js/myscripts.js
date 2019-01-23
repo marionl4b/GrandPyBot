@@ -61,13 +61,12 @@ function ajaxPost(url, data, success, error, progress){
     xhr.open("POST", url);
     xhr.setRequestHeader("content-type", "application/json; charset=UTF-8");
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4){
-            if (xhr.status >=200 && xhr.status < 300){
-                success(data);
-                progress(false);
-            }else{
-                error(xhr.status, xhr.statusText)
-            }
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let results = JSON.parse(xhr.responseText);
+            success(data, results);
+            progress(false);
+        } else {
+            error(xhr.status, xhr.statusText)
         }
     };
     xhr.send((data));
@@ -78,9 +77,14 @@ document.getElementById("ajaxButton").addEventListener("click", function () {
     let data = JSON.stringify({userMessage: usermsg});
     ajaxPost("/index", data, success, error, progress);
 
-    function success(data) {
+    function success(data, results) {
         addUserBubble();
         console.log(data);
+        console.log(results);
+        let resultVal = Object.values(results);
+        if (resultVal[0] === "error"){
+            addGpbBubble("Erreur");
+        }
     }
 
     function error(err, txt) {
