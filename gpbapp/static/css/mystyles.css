@@ -15,11 +15,16 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   margin-bottom: 60px; /* Margin bottom by footer height */
   background-color: var(--main-bg-color);
   color: var(--text-color) !important;
   font-family: 'Roboto Slab', serif;
+}
+
+main {
+  padding-bottom: 170px;
 }
 
 #prompt{ /*fix to footer*/
