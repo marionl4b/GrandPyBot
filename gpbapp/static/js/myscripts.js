@@ -1,7 +1,8 @@
+let gpbLib = {};
 let form = document.querySelector("form");
 let chat = document.getElementById("chat");
 
-function addUserBubble(){
+gpbLib.addUserBubble = function (){
     // set user message into a bubble of the chat section
     let userRow = document.createElement("div");// set new user chat row
     userRow.classList.add("row", "user-message", "align-items-end");
@@ -25,9 +26,9 @@ function addUserBubble(){
     userRow.appendChild(userCol1);
     userRow.appendChild(userCol2);
     chat.appendChild(userRow);
-}
+};
 
-function addGpbBubble(message){
+gpbLib.addGpbBubble = function (message, state){
     // set grandPyBot message into a bubble of the chat section
     let gpbRow = document.createElement("div");// set new gpb chat row
     gpbRow.classList.add("row", "gpb-message", "align-items-start");
@@ -51,11 +52,13 @@ function addGpbBubble(message){
     gpbRow.appendChild(gpbCol1);
     gpbRow.appendChild(gpbCol2);
     chat.appendChild(gpbRow);
-}
 
-addGpbBubble("Bonjour Poussin, qu'est ce que je peux faire pour toi?");
+    if(state === "error"){
+        gpbP.classList.add("bg-danger")
+    }
+};
 
-function ajaxPost(url, data, success, error, progress){
+gpbLib.ajaxPost = function (url, data, success, error, progress){
     progress(true);
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url);
@@ -70,28 +73,4 @@ function ajaxPost(url, data, success, error, progress){
         }
     };
     xhr.send((data));
-}
-
-document.getElementById("ajaxButton").addEventListener("click", function () {
-    let usermsg = document.getElementById("textUserMessage").value;
-    let data = JSON.stringify({userMessage: usermsg});
-    ajaxPost("/index", data, success, error, progress);
-
-    function success(data, results) {
-        addUserBubble();
-        console.log(data);
-        console.log(results);
-        let resultVal = Object.values(results);
-        if (resultVal[0] === "error"){
-            addGpbBubble("Erreur");
-        }
-    }
-
-    function error(err, txt) {
-        console.log(err, txt)
-    }
-
-    function progress(state) {
-
-    }
-});
+};

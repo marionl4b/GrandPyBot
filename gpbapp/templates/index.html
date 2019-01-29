@@ -21,3 +21,35 @@
         </section>
     </main>
 {% endblock %}
+{% block script %}
+    <script type="text/javascript">
+    /////// gpb javascript library calls ///////
+    gpbLib.addGpbBubble("Bonjour Poussin, qu'est ce que je peux faire pour toi?", "success"); //init gpb bubble
+
+    document.getElementById("ajaxButton").addEventListener("click", function () { // ajax post on ajaxButton click event
+        let usermsg = document.getElementById("textUserMessage").value;
+        let data = JSON.stringify({userMessage: usermsg});
+        gpbLib.ajaxPost("/index", data, success, error, progress);
+    });
+
+    function success(data, results) { // if post data sent retrieve parsed data result from user_message in views.py
+        gpbLib.addUserBubble();
+        {#console.log(data);#}
+        {#console.log(results);#}
+        let resultVal = Object.values(results);
+        if (resultVal[0] === "error"){
+            gpbLib.addGpbBubble("Erreur", "error"); // display an error message if parsing failed
+        }else{ // display google map then wikipedia infos
+            gpbLib.addGpbBubble("Bien, laisse moi retrouver le plan", "success");
+        }
+    }
+
+    function error(err, txt) { // if server error
+        {#console.log(err, txt)#}
+    }
+
+    function progress(state) { // before success
+
+    }
+    </script>
+{% endblock %}
