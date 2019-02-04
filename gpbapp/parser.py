@@ -17,22 +17,21 @@ class Parser:
         message = json.loads(json_data)
         if message.get("userMessage") != "":
             self.message = message.get("userMessage")
-            self.stopwords()
         else:
             self.error = True
 
-    def stopwords(self):
+    def parse_usermsg(self, data):
+        self.check_usermsg(data)
         message = self.message.lower()
-        ready_to_parse = list(re.findall(r"\w+", message))
+        message = list(re.findall(r"\w+", message))
         with open(self.stopwords_file) as f:
             data = json.load(f)
         stopwords = list(data)
-        self.parsed_message = [x for x in ready_to_parse if x not in stopwords]
-        self.error_message()
+        self.parsed_message = [x for x in message if x not in stopwords]
+        self.result()
 
-    def error_message(self):
-        message = self.parsed_message
-        if len(message) != 0:
+    def result(self):
+        if len(self.parsed_message) != 0:
             self.error = False
         else:
             self.error = True

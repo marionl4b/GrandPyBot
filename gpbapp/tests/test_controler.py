@@ -23,6 +23,6 @@ class TestViews:
         assert res.status_code == 200
 
     def test_json(self, test_client):
-        """ test valid server response for post request in /index and verify json posted data """
+        """ test valid server response for post request in /index in json format """
         res = test_client.post("/index", data=json.dumps({"userMessage": "test"}), content_type='application/json')
         assert res.status_code == 200

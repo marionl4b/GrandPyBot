@@ -9,13 +9,13 @@
             <form name="ajaxForm" method="post">
                 <div class="row justify-content-center">
                     <div class="col-7">
-                            <label class="sr-only" for="textUserMessage">Votre Message</label>
-                            <input type="text" class="form-control mb-2 mr-sm-2" name="usermsg" id="textUserMessage"
-                                   placeholder="Tapez votre message">
-                        </div>
-                        <div class="col-1">
-                            <button type="button" id="ajaxButton" class="btn mb-2">Envoyer</button>
-                        </div>
+                        <label class="sr-only" for="textUserMessage">Votre Message</label>
+                        <input type="text" class="form-control mb-2 mr-sm-2" name="usermsg" id="textUserMessage"
+                               placeholder="Tapez votre message">
+                    </div>
+                    <div class="col-1">
+                        <button type="button" id="ajaxButton" class="btn mb-2">Envoyer</button>
+                    </div>
                 </div>
             </form>
         </section>
@@ -23,33 +23,46 @@
 {% endblock %}
 {% block script %}
     <script type="text/javascript">
-    /////// gpb javascript library calls ///////
-    gpbLib.addGpbBubble("Bonjour Poussin, qu'est ce que je peux faire pour toi?", "success"); //init gpb bubble
+        /////// gpb javascript library calls ///////
+        gpbLib.addGpbBubble("Bonjour Poussin, qu'est ce que je peux faire pour toi?", "none", "success"); //init gpb bubble
+        i = 0;
+        document.getElementById("ajaxButton").addEventListener("click", function () { // ajax post on ajaxButton click event
+            i++;
+            let usermsg = document.getElementById("textUserMessage").value;
+            let data = JSON.stringify({userMessage: usermsg});
+            gpbLib.addUserBubble();
+            gpbLib.ajaxPost("/index", data, success, error, progress);
 
-    document.getElementById("ajaxButton").addEventListener("click", function () { // ajax post on ajaxButton click event
-        let usermsg = document.getElementById("textUserMessage").value;
-        let data = JSON.stringify({userMessage: usermsg});
-        gpbLib.ajaxPost("/index", data, success, error, progress);
-    });
 
-    function success(data, results) { // if post data sent retrieve parsed data result from user_message in views.py
-        gpbLib.addUserBubble();
-        {#console.log(data);#}
-        {#console.log(results);#}
-        let resultVal = Object.values(results);
-        if (resultVal[0] === "error"){
-            gpbLib.addGpbBubble("Erreur", "error"); // display an error message if parsing failed
-        }else{ // display google map then wikipedia infos
-            gpbLib.addGpbBubble("Bien, laisse moi retrouver le plan", "success");
+            function success(data, results) { // if post data sent retrieve parsed data result from user_message in controler.py
+                let resultVal = Object.values(results);
+                if (resultVal[0] === "error") {
+                    gpbLib.addGpbBubble("Erreur", "none", "error"); // display an error message if parsing failed
+                } else { // display google map then wikipedia infos
+                    let usrGmap = resultVal[0];
+                    gpbLib.addGpbBubble(usrGmap.address, "map" + i, "success");
+                    initMap(usrGmap.latitude, usrGmap.longitude);
+                }
+            }
+
+            function error(err, txt) { // if server error
+                {#console.log(err, txt)#}
+            }
+            function progress() {
+                gpbLib.addGpbBubble("...", "none", "success");
+            }
+
+        });
+
+
+        function initMap(latitude, longitude) {
+            let userLocation = {lat: latitude, lng: longitude};
+            let map = new google.maps.Map(
+                document.getElementById('map' + i), {zoom: 15, center: userLocation});
+            let marker = new google.maps.Marker({position: userLocation, map: map});
+
         }
-    }
 
-    function error(err, txt) { // if server error
-        {#console.log(err, txt)#}
-    }
 
-    function progress(state) { // before success
-
-    }
     </script>
 {% endblock %}

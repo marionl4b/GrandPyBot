@@ -28,7 +28,7 @@ gpbLib.addUserBubble = function (){
     chat.appendChild(userRow);
 };
 
-gpbLib.addGpbBubble = function (message, state){
+gpbLib.addGpbBubble = function (message, container, state){
     // set grandPyBot message into a bubble of the chat section
     let gpbRow = document.createElement("div");// set new gpb chat row
     gpbRow.classList.add("row", "gpb-message", "align-items-start");
@@ -56,18 +56,25 @@ gpbLib.addGpbBubble = function (message, state){
     if(state === "error"){
         gpbP.classList.add("bg-danger")
     }
+
+    if(container !== "none"){
+        let gpbContainer = document.createElement("div");
+        gpbBubble.appendChild(gpbContainer);
+        gpbContainer.setAttribute("id", container);
+        gpbContainer.classList.add("map");
+    }
 };
 
 gpbLib.ajaxPost = function (url, data, success, error, progress){
-    progress(true);
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url);
+    progress(true);
     xhr.setRequestHeader("content-type", "application/json; charset=UTF-8");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             let results = JSON.parse(xhr.responseText);
             success(data, results);
-            progress(false);
+            progress(false)
         } else {
             error(xhr.status, xhr.statusText)
         }
