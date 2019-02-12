@@ -1,39 +1,85 @@
+import requests
+import requests_mock
+import pytest
+
 from gpbapp import gmap
+GMAP = gmap.gMapApi()
+
+
+@pytest.fixture()
+def exp_params():
+    """return a dictionary for request with right params"""
+    params = {
+        "key": "key",
+        "address": "sacré coeur",
+        "region": "fr",
+        "language": "fr"
+    }
+    return params
+
+
+@pytest.fixture()
+def exp_parsed_results():
+    """return a dictionary of expected parsed json response"""
+    parsed_results = {
+        "address": "35 Rue du Chevalier de la Barre, 75018 Paris, France",
+        "longitude": 2.3431043,
+        "latitude": 48.88670459999999,
+        "search_term": "Rue du Chevalier de la Barre"
+    }
+    return parsed_results
 
 
 class TestGMap:
 
-        GMAP = gmap.gMapApi()
-        EXP_RES = {
-            "formatted_address": "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France",
-            "longitude": 2.2944813,
-            "latitude": 48.85837009999999
-        }
-        EXP_STATUS = ["OK", "INVALID_REQUEST", "REQUEST_DENIED", "ZERO_RESULTS"]
+    def test_request_ok(self, exp_params):
+        """should return json dict with status: OK"""
+        with requests_mock.Mocker(real_http=True) as m:
+            m.get('mock://maps.googleapis.com/maps/api/geocode/json?',
+                  headers=exp_params,
+                  status_code=200,
+                  json={"status": "OK"})
+            r_exp = requests.get('mock://maps.googleapis.com/maps/api/geocode/json?').json()
+            r = GMAP.api_get_geocode_request("sacré coeur")
+            assert r_exp["status"] == r["status"]
 
-        def test_gmap_api_server_response(self):
-            """test if google map geocode API response is valid"""
-            self.GMAP.api_get_geocode_request("Tour Eiffel")
-            assert self.EXP_STATUS[0] == self.GMAP.response["status"]
+    def test_valid_parsed_response(self, exp_parsed_results):
+        """should return expected dictionary from json response"""
+        r = GMAP.api_get_geocode_request("sacré coeur")
+        parsed_results = GMAP.api_parsed_results(r)
+        assert exp_parsed_results == parsed_results
 
-        def test_gmap_api_data_retrieved(self):
-            """test if google map geocode API parsed response contains expected data"""
-            self.GMAP.api_get_geocode_request("Tour Eiffel")
-            assert self.EXP_RES["formatted_address"] == self.GMAP.parsed_results["formatted_address"]
+    def test_error_search_term(self):
+        """should return an error if json response doesn't match search term crawling key"""
+        r = GMAP.api_get_geocode_request("tour eiffel")
+        GMAP.api_get_search_term(r)
+        assert GMAP.error
 
-        def test_gmap_api_empty_address(self):
-            """test google map API with empty address parameter """
-            empty = ""
-            self.GMAP.api_get_geocode_request(empty)
-            assert self.GMAP.error
+    def test_empty_address(self, exp_params):
+        """should intercept error before sending request"""
+        empty = ""
+        GMAP.api_get_geocode_request(empty)
+        assert GMAP.error
 
-        def test_gmap_api_unknown_address(self):
-            """test google map API with wrong address parameter """
-            self.GMAP.api_get_geocode_request("unknown_address")
-            assert self.EXP_STATUS[3] == self.GMAP.response["status"]
+    def test_unknown_address(self, exp_params):
+        """should return json dict with status: ZERO_RESULTS"""
+        exp_params["address"] = "unknown"
+        with requests_mock.Mocker(real_http=True) as m:
+            m.get('mock://maps.googleapis.com/maps/api/geocode/json?',
+                  headers=exp_params,
+                  json={"status": "ZERO_RESULTS"})
+            r_exp = requests.get('mock://maps.googleapis.com/maps/api/geocode/json?').json()
+            r = GMAP.api_get_geocode_request("unknown")
+            assert r_exp["status"] == r["status"]
 
-        def test_gmap_api_bad_key(self):
-            """test wrong google map API key """
-            self.GMAP.key = "wrongkey"
-            self.GMAP.api_get_geocode_request("Tour Eiffel")
-            assert self.EXP_STATUS[2] == self.GMAP.response["status"]
+    def test_wrong_key(self, exp_params):
+        """should return json dict with status: REQUEST_DENIED"""
+        exp_params["key"] = "wrong_key"
+        GMAP.key = "wrong_key"
+        with requests_mock.Mocker(real_http=True) as m:
+            m.get('mock://maps.googleapis.com/maps/api/geocode/json?',
+                  headers=exp_params,
+                  json={"status": "REQUEST_DENIED"})
+            r_exp = requests.get('mock://maps.googleapis.com/maps/api/geocode/json?').json()
+            r = GMAP.api_get_geocode_request("sacré coeur")
+            assert r_exp["status"] == r["status"]
