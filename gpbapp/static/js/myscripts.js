@@ -57,12 +57,17 @@ gpbLib.addGpbBubble = function (message, container, state){
         gpbP.classList.add("bg-danger")
     }
 
-    if(container !== "none"){
+    if(container === "wiki") {
+        let gpbContainer = document.createElement("div");
+        gpbBubble.appendChild(gpbContainer);
+        gpbContainer.classList.add("wiki");
+    }else if (container !== "none"){
         let gpbContainer = document.createElement("div");
         gpbBubble.appendChild(gpbContainer);
         gpbContainer.setAttribute("id", container);
         gpbContainer.classList.add("map");
     }
+
 };
 
 gpbLib.ajaxPost = function (url, data, success, error, progress){

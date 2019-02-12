@@ -40,8 +40,10 @@
                     gpbLib.addGpbBubble("Erreur", "none", "error"); // display an error message if parsing failed
                 } else { // display google map then wikipedia infos
                     let usrGmap = resultVal[0];
-                    gpbLib.addGpbBubble(usrGmap.address, "map" + i, "success");
+                    let usrWiki = resultVal[2];
+                    gpbLib.addGpbBubble(usrGmap.address, "map" +i, "success");
                     initMap(usrGmap.latitude, usrGmap.longitude);
+                    gpbLib.addGpbBubble(usrWiki.summary + usrWiki.url, "wiki", "success")
                 }
             }
 
