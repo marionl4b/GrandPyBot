@@ -12,26 +12,24 @@ class Parser:
         self.parsed_message = ""
         self.error = False
 
-    def check_usermsg(self, data):
-        json_data = json.dumps(data)
+    def check_usermsg(self, prompt):
+        json_data = json.dumps(prompt)
         message = json.loads(json_data)
         if message.get("userMessage") != "":
-            self.message = message.get("userMessage")
+            checked_msg = "{}".format(message.get("userMessage"))
+            return checked_msg
         else:
-            self.error = True
+            return None
 
-    def parse_usermsg(self, data):
-        self.check_usermsg(data)
-        message = self.message.lower()
-        message = list(re.findall(r"\w+", message))
-        with open(self.stopwords_file) as f:
-            data = json.load(f)
-        stopwords = list(data)
-        self.parsed_message = [x for x in message if x not in stopwords]
-        self.result()
-
-    def result(self):
-        if len(self.parsed_message) != 0:
-            self.error = False
-        else:
-            self.error = True
+    def parse_usermsg(self, prompt):
+        parse_msg = self.check_usermsg(prompt)
+        if parse_msg:
+            parse_msg = parse_msg.lower()
+            parse_msg = list(re.findall(r"\w+", parse_msg))
+            with open(self.stopwords_file) as f:
+                data = json.load(f)
+            stopwords = list(data)
+            parsed_message = [x for x in parse_msg if x not in stopwords]
+            if len(parsed_message) != 0:
+                return parsed_message
+        return None

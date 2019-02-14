@@ -22,12 +22,12 @@ def user_message():
             return jsonify({"usr_location": "ok", "gmap": gmap_results, "wiki": wiki_results})
 
     data = request.json
-    parser.parse_usermsg(data)
+    parsed_msg = parser.parse_usermsg(data)
 
-    if parser.error:
+    if parsed_msg is None:
         return jsonify({"usr_location": "error"})
     else:
-        gmap_r = gmap.get_geocode(parser.parsed_message)
+        gmap_r = gmap.get_geocode(parsed_msg)
         if gmap_r is None:
             return jsonify({"usr_location": "error"})
 
