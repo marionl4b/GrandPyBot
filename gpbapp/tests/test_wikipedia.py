@@ -19,22 +19,22 @@ class TestWikipedia:
 
     def test_results(self, exp_results):
         """should retrieve expected data in a dictionary"""
-        parsed_results = self.WIKI.dict_results_constructor("Rue du Chevalier de la Barre")
+        parsed_results = self.WIKI.prepare_data("Rue du Chevalier de la Barre")
         assert exp_results == parsed_results
 
     def test_empty_data(self):
         """should intercept error before sending request"""
         empty = ""
-        self.WIKI.dict_results_constructor(empty)
-        assert self.WIKI.error
+        result = self.WIKI.prepare_data(empty)
+        assert result is None
 
     def test_page_error(self):
         """error with search term matching no wikipedia page title"""
         wrong_data = "fjkqshli"
         with pytest.raises(wikipedia.exceptions.PageError):
-            self.WIKI.dict_results_constructor(wrong_data)
+            self.WIKI.prepare_data(wrong_data)
 
     def test_disambiguation_error(self):
         """error with search term matching too many page title"""
         with pytest.raises(wikipedia.exceptions.DisambiguationError):
-            self.WIKI.dict_results_constructor("blabla")
+            self.WIKI.prepare_data("blabla")

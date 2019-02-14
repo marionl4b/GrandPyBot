@@ -70,16 +70,16 @@ gpbLib.addGpbBubble = function (message, container, state){
 
 };
 
-gpbLib.ajaxPost = function (url, data, success, error, progress){
+gpbLib.ajaxPost = function (url, data, success, error, progShow, progHide){
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url);
-    progress(true);
+    progShow();
     xhr.setRequestHeader("content-type", "application/json; charset=UTF-8");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             let results = JSON.parse(xhr.responseText);
             success(data, results);
-            progress(false)
+            progHide();
         } else {
             error(xhr.status, xhr.statusText)
         }

@@ -40,26 +40,26 @@ class TestGMap:
                   status_code=200,
                   json={"status": "OK"})
             r_exp = requests.get('mock://maps.googleapis.com/maps/api/geocode/json?').json()
-            r = GMAP.api_get_geocode_request("sacré coeur")
+            r = GMAP.get_geocode("sacré coeur")
             assert r_exp["status"] == r["status"]
 
     def test_valid_parsed_response(self, exp_parsed_results):
         """should return expected dictionary from json response"""
-        r = GMAP.api_get_geocode_request("sacré coeur")
-        parsed_results = GMAP.api_parsed_results(r)
+        r = GMAP.get_geocode("sacré coeur")
+        parsed_results = GMAP.parse_results(r)
         assert exp_parsed_results == parsed_results
 
     def test_error_search_term(self):
         """should return an error if json response doesn't match search term crawling key"""
-        r = GMAP.api_get_geocode_request("tour eiffel")
-        GMAP.api_get_search_term(r)
-        assert GMAP.error
+        response = GMAP.get_geocode("tour eiffel")
+        result = GMAP.get_search_term(response)
+        assert result is None
 
     def test_empty_address(self, exp_params):
         """should intercept error before sending request"""
         empty = ""
-        GMAP.api_get_geocode_request(empty)
-        assert GMAP.error
+        result =  GMAP.get_geocode(empty)
+        assert result is None
 
     def test_unknown_address(self, exp_params):
         """should return json dict with status: ZERO_RESULTS"""
@@ -69,17 +69,17 @@ class TestGMap:
                   headers=exp_params,
                   json={"status": "ZERO_RESULTS"})
             r_exp = requests.get('mock://maps.googleapis.com/maps/api/geocode/json?').json()
-            r = GMAP.api_get_geocode_request("unknown")
+            r = GMAP.get_geocode("unknown")
             assert r_exp["status"] == r["status"]
 
     def test_wrong_key(self, exp_params):
         """should return json dict with status: REQUEST_DENIED"""
         exp_params["key"] = "wrong_key"
-        GMAP.key = "wrong_key"
+        GMAP.KEY = "wrong_key"
         with requests_mock.Mocker(real_http=True) as m:
             m.get('mock://maps.googleapis.com/maps/api/geocode/json?',
                   headers=exp_params,
                   json={"status": "REQUEST_DENIED"})
             r_exp = requests.get('mock://maps.googleapis.com/maps/api/geocode/json?').json()
-            r = GMAP.api_get_geocode_request("sacré coeur")
+            r = GMAP.get_geocode("sacré coeur")
             assert r_exp["status"] == r["status"]

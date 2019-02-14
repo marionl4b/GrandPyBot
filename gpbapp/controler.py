@@ -14,14 +14,25 @@ def index():
 
 @app.route('/index', methods=['POST'])
 def user_message():
+    def process_wiki(gmap_results):
+        wiki_results = wiki.prepare_data(gmap_results.get("search_term"))
+        if wiki_results is None:
+            return jsonify({"usr_location": "error"})
+        else:
+            return jsonify({"usr_location": "ok", "gmap": gmap_results, "wiki": wiki_results})
+
     data = request.json
     parser.parse_usermsg(data)
-    gmap_r = gmap.api_get_geocode_request(parser.parsed_message)
-    gmap_parsed_results = gmap.api_parsed_results(gmap_r)
-    wiki_parsed_results = wiki.dict_results_constructor(gmap_parsed_results.get("search_term"))
-    if parser.error or gmap.error or wiki.error:
+
+    if parser.error:
         return jsonify({"usr_location": "error"})
     else:
-        return jsonify({"usr_location": "ok",
-                        "gmap": gmap_parsed_results,
-                        "wiki": wiki_parsed_results})
+        gmap_r = gmap.get_geocode(parser.parsed_message)
+        if gmap_r is None:
+            return jsonify({"usr_location": "error"})
+
+        gmap_results = gmap.parse_results(gmap_r)
+        if gmap_results is None:
+            return jsonify({"usr_location": "error"})
+        else:
+            return process_wiki(gmap_results)

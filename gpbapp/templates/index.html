@@ -3,7 +3,6 @@
 {% block content %}
     <main role="main">
         <section id="chat" class="container">
-
         </section>
         <section id="prompt">
             <form name="ajaxForm" method="post">
@@ -31,7 +30,7 @@
             let usermsg = document.getElementById("textUserMessage").value;
             let data = JSON.stringify({userMessage: usermsg});
             gpbLib.addUserBubble();
-            gpbLib.ajaxPost("/index", data, success, error, progress);
+            gpbLib.ajaxPost("/index", data, success, error, progShow, progHide);
 
 
             function success(data, results) { // if post data sent retrieve parsed data result from user_message in controler.py
@@ -50,10 +49,22 @@
             function error(err, txt) { // if server error
                 {#console.log(err, txt)#}
             }
-            function progress() {
-                gpbLib.addGpbBubble("...", "none", "success");
+            function progShow() {
+                let progWrap = document.createElement("div");
+                let progImg = document.createElement("div");
+                let chat = document.getElementById("chat");
+                progWrap.classList.add("progress-wrapper");
+                progImg.classList.add("progress-show");
+                progImg.insertAdjacentHTML("afterbegin",
+                    "<i class='fas fa-compass fa-3x fa-spin'></i>" );
+                progWrap.appendChild(progImg);
+                chat.appendChild(progWrap);
             }
-
+            function progHide() {
+                let progImg = document.querySelector(".progress-show");
+                progImg.classList.remove("progress-show");
+                progImg.classList.add("progress-hide");
+            }
         });
 
 

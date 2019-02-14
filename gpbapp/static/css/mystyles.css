@@ -93,6 +93,24 @@ main {
   width: 100%;  /* The width is the width of the web page */
 }
 
+/*progress*/
+.progress-wrapper{
+  position: relative;
+}
+.progress-show{
+  display: block;
+  background-color: var(--main-bg-color);
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  top : 0;
+  left: 0;
+  z-index: 10;
+}
+.progress-hide{
+  display: none;
+}
+
 /*prompt*/
 #prompt .btn{
   color: white;

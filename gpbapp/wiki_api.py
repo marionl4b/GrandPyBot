@@ -1,33 +1,30 @@
-import wikipedia
+from wikipedia import set_lang, page, summary
+from wikipedia.exceptions import DisambiguationError, PageError
 
 
 class WikipediaCalls:
     def __init__(self):
-        wikipedia.set_lang("fr")
-        self.error = False
+        set_lang("fr")
 
     def get_summary(self, data):
         try:
-            summary = wikipedia.summary(data)
-            return summary
-        except wikipedia.exceptions.PageError:
-            self.error = True
-        except wikipedia.exceptions.DisambiguationError:
-            self.error = True
+            return summary(data)
+        except (PageError, DisambiguationError):
+            return None
 
     def get_url(self, data):
-        r = wikipedia.page(data)
+        r = page(data)
         url = r.url
         return url
 
-    def dict_results_constructor(self, data):
-        if len(data) != 0:
-            summary = self.get_summary(data)
+    def prepare_data(self, data):
+        if data:
+            s = self.get_summary(data)
             url = self.get_url(data)
             parsed_results = {
-                "summary": summary,
+                "summary": s,
                 "url": url
             }
             return parsed_results
         else:
-            self.error = True
+            return None
