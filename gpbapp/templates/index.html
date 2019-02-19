@@ -7,12 +7,12 @@
         <section id="prompt">
             <form name="ajaxForm" method="post">
                 <div class="row justify-content-center">
-                    <div class="col-7">
+                    <div class="col-8 col-md-8 col-lg-7">
                         <label class="sr-only" for="textUserMessage">Votre Message</label>
                         <input type="text" class="form-control mb-2 mr-sm-2" name="usermsg" id="textUserMessage"
                                placeholder="Tapez votre message">
                     </div>
-                    <div class="col-1">
+                    <div class="col-4 col-md-2 col-lg-1">
                         <button type="button" id="ajaxButton" class="btn mb-2" onclick="postJson()">Envoyer</button>
                     </div>
                 </div>
@@ -27,8 +27,8 @@
         i = 0;
 
         document.getElementById("textUserMessage").addEventListener("keydown", function(event) {
-            event.preventDefault();
             if (event.keyCode === 13) {
+                event.preventDefault();
                 document.getElementById("ajaxButton").click();
             }
         });

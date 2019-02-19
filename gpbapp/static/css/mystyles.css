@@ -61,7 +61,8 @@ main {
   margin-top: 2em;
 }
 #chat .avatar{
-  width: 3em;
+  width: 2.5em;
+  margin-left: -5px;
 }
 
 #chat .bubble{
@@ -72,6 +73,7 @@ main {
   display: inline-flex;
   padding: 1em;
   color: white;
+  max-width: 80%;
 }
 
 #chat .gpb-message .bubble p{
@@ -91,7 +93,7 @@ main {
 /*map*/
 .map {
   height: 400px;  /* The height is 400 pixels */
-  width: 100%;  /* The width is the width of the web page */
+  width: 80%;  /* The width is the width of the web page */
 }
 
 /*wiki*/
@@ -139,3 +141,11 @@ main {
 .fa-github-alt{
   color: var(--footer-text-color);
 }
+
+/*responsive*/
+ @media (min-width: 768px) {
+   #chat .avatar{
+      width: 3em;
+     margin-left: 0;
+   }
+ }
