@@ -3,7 +3,7 @@ from flask import json
 from gpbapp import app
 
 
-class TestViews:
+class TestControler:
 
     @pytest.fixture
     def test_client(self):
@@ -28,3 +28,10 @@ class TestViews:
                                data=json.dumps({"userMessage": "test"}),
                                content_type='application/json')
         assert res.status_code == 200
+
+    def test_bad_location(self, test_client):
+        """ test valid server response for post request in /index in json format """
+        res = test_client.post("/index",
+                               data=json.dumps({"usr_location": "error"}),
+                               content_type='application/json')
+        assert res.json == {"usr_location": "error"}

@@ -58,16 +58,13 @@ gpbLib.addGpbBubble = function (message, container, state){
     }
 
     if(container === "wiki") {
-        let gpbContainer = document.createElement("div");
-        gpbBubble.appendChild(gpbContainer);
-        gpbContainer.classList.add("wiki");
+        gpbP.classList.add("wiki");
     }else if (container !== "none"){
         let gpbContainer = document.createElement("div");
         gpbBubble.appendChild(gpbContainer);
         gpbContainer.setAttribute("id", container);
         gpbContainer.classList.add("map");
     }
-
 };
 
 gpbLib.ajaxPost = function (url, data, success, error, progShow, progHide){

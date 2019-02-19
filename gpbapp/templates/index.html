@@ -13,7 +13,7 @@
                                placeholder="Tapez votre message">
                     </div>
                     <div class="col-1">
-                        <button type="button" id="ajaxButton" class="btn mb-2">Envoyer</button>
+                        <button type="button" id="ajaxButton" class="btn mb-2" onclick="postJson()">Envoyer</button>
                     </div>
                 </div>
             </form>
@@ -25,7 +25,15 @@
         /////// gpb javascript library calls ///////
         gpbLib.addGpbBubble("Bonjour Poussin, qu'est ce que je peux faire pour toi?", "none", "success"); //init gpb bubble
         i = 0;
-        document.getElementById("ajaxButton").addEventListener("click", function () { // ajax post on ajaxButton click event
+
+        document.getElementById("textUserMessage").addEventListener("keydown", function(event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                document.getElementById("ajaxButton").click();
+            }
+        });
+
+        function postJson(){
             i++;
             let usermsg = document.getElementById("textUserMessage").value;
             let data = JSON.stringify({userMessage: usermsg});
@@ -33,16 +41,20 @@
             gpbLib.ajaxPost("/index", data, success, error, progShow, progHide);
 
 
-            function success(data, results) { // if post data sent retrieve parsed data result from user_message in controler.py
+            function success(data, results) { // if post data sent retrieve parsed data result
+                                                // from user_message in controler.py
                 let resultVal = Object.values(results);
                 if (resultVal[0] === "error") {
-                    gpbLib.addGpbBubble("Erreur", "none", "error"); // display an error message if parsing failed
+                    gpbLib.addGpbBubble("Aïe, je n'ai pas compris où tu voulais te rendre",
+                        "none", "error"); // display an error message if parsing failed
                 } else { // display google map then wikipedia infos
                     let usrGmap = resultVal[0];
                     let usrWiki = resultVal[2];
                     gpbLib.addGpbBubble(usrGmap.address, "map" +i, "success");
                     initMap(usrGmap.latitude, usrGmap.longitude);
-                    gpbLib.addGpbBubble(usrWiki.summary + usrWiki.url, "wiki", "success")
+                    gpbLib.addGpbBubble("J'ai bien connu ce quartier ! "+ usrWiki.summary, "wiki", "success");
+                    let wikiBubble = document.querySelector(".wiki");
+                    wikiBubble.insertAdjacentHTML("beforeend", '<a href="'+usrWiki.url+'" target="_blank"> (voir sur wikipédia)</a>')
                 }
             }
 
@@ -55,8 +67,7 @@
                 let chat = document.getElementById("chat");
                 progWrap.classList.add("progress-wrapper");
                 progImg.classList.add("progress-show");
-                progImg.insertAdjacentHTML("afterbegin",
-                    "<i class='fas fa-compass fa-3x fa-spin'></i>" );
+                progImg.insertAdjacentHTML("afterbegin", "<i class='fas fa-compass fa-3x fa-spin'></i>" );
                 progWrap.appendChild(progImg);
                 chat.appendChild(progWrap);
             }
@@ -65,8 +76,7 @@
                 progImg.classList.remove("progress-show");
                 progImg.classList.add("progress-hide");
             }
-        });
-
+        }
 
         function initMap(latitude, longitude) {
             let userLocation = {lat: latitude, lng: longitude};
@@ -75,7 +85,5 @@
             let marker = new google.maps.Marker({position: userLocation, map: map});
 
         }
-
-
     </script>
 {% endblock %}

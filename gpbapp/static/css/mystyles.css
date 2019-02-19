@@ -9,6 +9,7 @@
   --first-accent-color: #3698d2;
   --second-accent-color: #7bbf92;
   --second-accent-shadow: #73a986;
+  --warning-color: #ffc107;
 }
 /*layout*/
 html {
@@ -93,6 +94,15 @@ main {
   width: 100%;  /* The width is the width of the web page */
 }
 
+/*wiki*/
+.wiki{
+  display: inline-block !important;
+}
+.wiki a{
+  color: white;
+  text-decoration: underline;
+}
+
 /*progress*/
 .progress-wrapper{
   position: relative;
@@ -106,6 +116,10 @@ main {
   top : 0;
   left: 0;
   z-index: 10;
+}
+.progress-show i{
+  margin-left: 50%;
+  color: var(--warning-color);
 }
 .progress-hide{
   display: none;
