@@ -14,6 +14,13 @@ def index():
 
 @app.route('/index', methods=['POST'])
 def user_message():
+    """
+    run the process of parsing user message and post location and wikipedia data to display
+    for frontend in json format
+    GIVEN : user prompt in json format
+    THEN : return a dictionary with user location status, gmap api results and wikipedia api results
+    WHEN : each step of the process return is not None
+    """
     def process_parser(data):
         parsed_msg = parser.parse_usermsg(data)
         if parsed_msg is None:
@@ -40,4 +47,3 @@ def user_message():
 
     usr_data = request.json
     return process_parser(usr_data)
-

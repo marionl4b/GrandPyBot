@@ -6,10 +6,11 @@ from gpbapp import app
 
 
 class Parser:
+    """Run a parser after checking user post prompt is not empty
+    Then lower user message, remove punctuation and stopwords
+    finally return parsed location for gmap api"""
     def __init__(self):
-        self.message = ""
         self.stopwords_file = os.path.join(app.static_folder, 'stopwords.json')
-        self.parsed_message = ""
         self.error = False
 
     def check_usermsg(self, prompt):

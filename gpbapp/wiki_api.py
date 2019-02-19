@@ -3,6 +3,10 @@ from wikipedia.exceptions import DisambiguationError, PageError
 
 
 class WikipediaCalls:
+    """run GET request for the wikipedia API with python wrapper
+    GIVEN: search term form gmap api prev request
+    THEN: return a dictionary with wikipedia data results for page sumary and page link
+    WHEN: search term retrieve a correct page subject"""
     def __init__(self):
         set_lang("fr")
 

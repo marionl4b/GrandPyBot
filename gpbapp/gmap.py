@@ -2,6 +2,12 @@ import requests
 
 
 class gMapApi:
+    """run GET request for google map API with geocode
+    GIVEN: parsed location term
+    THEN: return a dictionary with address, longitude, latitude and search_term
+    in order to display a javascript google map in frontend and requesting wikipedia API
+    WHEN: parameters of the request are correct and result for search term valid"""
+
     KEY = "AIzaSyBOl-QtMVnN0TEeRwt6jJAcUqQC0W9_2rU"
 
     def api_request_constructor(self, parsed_data):
@@ -42,4 +48,3 @@ class gMapApi:
             return search_term
         else:
             return None
-

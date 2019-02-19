@@ -9,7 +9,7 @@ def exp_results():
     exp_results = {
         "url": "https://fr.wikipedia.org/wiki/Rue_du_Chevalier-de-La-Barre",
         "summary": "La rue du Chevalier-de-La-Barre est une rue de la butte Montmartre à Paris, "
-                    "dans le 18e arrondissement."
+                   "dans le 18e arrondissement."
     }
     return exp_results
 
