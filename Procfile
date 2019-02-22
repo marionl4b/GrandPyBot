@@ -1,2 +1,2 @@
-web: gunicorn app:gpbapp
+web: gunicorn gpbapp:app
 heroku ps:scale web
