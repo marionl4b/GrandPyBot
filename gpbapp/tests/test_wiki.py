@@ -1,5 +1,6 @@
 import pytest
 import wikipedia
+
 from gpbapp import get_wiki
 
 

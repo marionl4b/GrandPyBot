@@ -1,5 +1,6 @@
 import pytest
 from flask import json
+
 from gpbapp import app
 
 

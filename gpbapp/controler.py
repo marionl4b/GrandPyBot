@@ -1,4 +1,5 @@
 from flask import render_template, jsonify, request
+
 from gpbapp import app, parser, get_geocode, get_wiki, settings
 
 parser = parser.Parser()

@@ -1,6 +1,6 @@
-import re
-import os
 import json
+import os
+import re
 
 from gpbapp import app
 

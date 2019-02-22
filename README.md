@@ -9,10 +9,10 @@ This application use Google Geocoding API and MediaWiki's API
 ## Install
 1. Clone the repository  
 2. Install dependencies with `pip install - r requirements.txt`  
-3. Edit `the settings.py file with your own Google Map Geocode API key
+3. Edit `the settings.py` file with your own Google Map Geocode API key
 
 ## Demo
-You can find a demo of my GrandPyBot on Heroku server 
+You can find a demo of my GrandPyBot on Heroku server at https://immense-ravine-80861.herokuapp.com/
 
 ## Author
 Marion Labarre  

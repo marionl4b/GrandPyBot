@@ -1,8 +1,9 @@
+import pytest
 import requests
 import requests_mock
-import pytest
 
 from gpbapp import get_geocode
+
 GMAP = get_geocode.GetGeocode()
 
 
