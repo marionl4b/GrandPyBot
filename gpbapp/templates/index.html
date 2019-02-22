@@ -50,9 +50,9 @@
                 } else { // display google map then wikipedia infos
                     let usrGmap = resultVal[0];
                     let usrWiki = resultVal[2];
-                    gpbLib.addGpbBubble(usrGmap.address, "map" +i, "success");
+                    gpbLib.addGpbBubble("Bien sûr mon poussin ! La voici : "+ usrGmap.address, "map" +i, "success");
                     initMap(usrGmap.latitude, usrGmap.longitude);
-                    gpbLib.addGpbBubble("J'ai bien connu ce quartier ! "+ usrWiki.summary, "wiki", "success");
+                    gpbLib.addGpbBubble("Mais t'ai-je déjà raconté l'histoire de ce quartier qui m'a vu en culottes courtes ? "+ usrWiki.summary, "wiki", "success");
                     let wikiBubble = document.querySelector(".wiki");
                     wikiBubble.insertAdjacentHTML("beforeend", '<a href="'+usrWiki.url+'" target="_blank"> (voir sur wikipédia)</a>')
                 }
