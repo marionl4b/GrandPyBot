@@ -1,4 +1,5 @@
 import requests
+from gpbapp import settings
 
 
 class GetGeocode:
@@ -8,7 +9,7 @@ class GetGeocode:
     in order to display a javascript google map in frontend and requesting wikipedia API
     WHEN: parameters of the request are correct and result for search term valid"""
 
-    KEY = "AIzaSyBOl-QtMVnN0TEeRwt6jJAcUqQC0W9_2rU"
+    KEY = settings.KEY
 
     def api_request_constructor(self, parsed_data):
         url = "https://maps.googleapis.com/maps/api/geocode/json?"

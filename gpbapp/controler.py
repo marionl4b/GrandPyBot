@@ -1,5 +1,5 @@
 from flask import render_template, jsonify, request
-from gpbapp import app, parser, get_geocode, get_wiki
+from gpbapp import app, parser, get_geocode, get_wiki, settings
 
 parser = parser.Parser()
 gmap = get_geocode.GetGeocode()
@@ -9,7 +9,7 @@ wiki = get_wiki.GetWiki()
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', title='Home')
+    return render_template('index.html', title='Home', settings=settings)
 
 
 @app.route('/index', methods=['POST'])
