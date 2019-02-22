@@ -1,6 +1,6 @@
 import pytest
 import wikipedia
-from gpbapp import wiki_api
+from gpbapp import get_wiki
 
 
 @pytest.fixture()
@@ -15,7 +15,7 @@ def exp_results():
 
 
 class TestWikipedia:
-    WIKI = wiki_api.WikipediaCalls()
+    WIKI = get_wiki.GetWiki()
 
     def test_results(self, exp_results):
         """should retrieve expected data in a dictionary"""

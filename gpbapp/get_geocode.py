@@ -1,7 +1,7 @@
 import requests
 
 
-class gMapApi:
+class GetGeocode:
     """run GET request for google map API with geocode
     GIVEN: parsed location term
     THEN: return a dictionary with address, longitude, latitude and search_term

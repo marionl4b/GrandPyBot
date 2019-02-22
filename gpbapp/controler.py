@@ -1,9 +1,9 @@
 from flask import render_template, jsonify, request
-from gpbapp import app, parser, gmap, wiki_api
+from gpbapp import app, parser, get_geocode, get_wiki
 
 parser = parser.Parser()
-gmap = gmap.gMapApi()
-wiki = wiki_api.WikipediaCalls()
+gmap = get_geocode.GetGeocode()
+wiki = get_wiki.GetWiki()
 
 
 @app.route('/')

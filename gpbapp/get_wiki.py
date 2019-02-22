@@ -2,7 +2,7 @@ from wikipedia import set_lang, page, summary
 from wikipedia.exceptions import DisambiguationError, PageError
 
 
-class WikipediaCalls:
+class GetWiki:
     """run GET request for the wikipedia API with python wrapper
     GIVEN: search term form gmap api prev request
     THEN: return a dictionary with wikipedia data results for page sumary and page link

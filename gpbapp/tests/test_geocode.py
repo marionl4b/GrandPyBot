@@ -2,8 +2,8 @@ import requests
 import requests_mock
 import pytest
 
-from gpbapp import gmap
-GMAP = gmap.gMapApi()
+from gpbapp import get_geocode
+GMAP = get_geocode.GetGeocode()
 
 
 @pytest.fixture()
