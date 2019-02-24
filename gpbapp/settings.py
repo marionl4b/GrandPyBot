@@ -1,1 +1,1 @@
-KEY = "AIzaSyBOl-QtMVnN0TEeRwt6jJAcUqQC0W9_2rU"  # google map geocode api key
+KEY = "AIzaSyAmpQq-LSmgJqgt3KPau9bnGIJDJgqPgbs"  # google map geocode api key

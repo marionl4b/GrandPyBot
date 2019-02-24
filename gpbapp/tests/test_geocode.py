@@ -6,7 +6,6 @@ from gpbapp import get_geocode
 
 GMAP = get_geocode.GetGeocode()
 
-
 @pytest.fixture()
 def exp_params():
     """return a dictionary for request with right params"""
