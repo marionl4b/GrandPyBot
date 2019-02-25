@@ -44,9 +44,17 @@ class GetGeocode:
             return None
 
     def get_search_term(self, response):
-        address_comp_dict = response["results"][0]["address_components"][1]
-        if address_comp_dict["types"] == ["route"]:
-            search_term = address_comp_dict.get("short_name")
+        address_1 = response["results"][0]["address_components"][0]
+        address_2 = response["results"][0]["address_components"][1]
+        address_3 = response["results"][0]["address_components"][2]
+        if address_1["types"] == ["route"]:
+            search_term = address_1.get("short_name")
+            return search_term
+        elif address_2["types"] == ["route"]:
+            search_term = address_2.get("short_name")
+            return search_term
+        elif address_3["types"] == ["route"]:
+            search_term = address_1.get("short_name")
             return search_term
         else:
             return None

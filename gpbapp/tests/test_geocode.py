@@ -54,11 +54,11 @@ class TestGMap:
         parsed_results = GMAP.parse_results(r)
         assert parsed_results is None
 
-    def test_error_search_term(self):
+    def test_special_search_term(self):
         """should return an error if json response doesn't match search term crawling key"""
         response = GMAP.get_geocode("tour eiffel")
         result = GMAP.get_search_term(response)
-        assert result is None
+        assert result == "Champ de Mars"
 
     def test_empty_address(self, exp_params):
         """should intercept error before sending request"""
