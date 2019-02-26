@@ -17,9 +17,12 @@ class GetWiki:
             return None
 
     def get_url(self, data):
-        r = page(data)
-        url = r.url
-        return url
+        try:
+            r = page(data)
+            url = r.url
+            return url
+        except (PageError, DisambiguationError):
+            return None
 
     def prepare_data(self, data):
         if data:

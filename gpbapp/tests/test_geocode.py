@@ -55,10 +55,22 @@ class TestGMap:
         assert parsed_results is None
 
     def test_special_search_term(self):
-        """should return an error if json response doesn't match search term crawling key"""
+        """should return establishment address component"""
         response = GMAP.get_geocode("tour eiffel")
         result = GMAP.get_search_term(response)
         assert result == "Champ de Mars"
+
+    def test_country_search_term(self):
+        """should return country address component"""
+        response = GMAP.get_geocode("Allemage")
+        result = GMAP.get_search_term(response)
+        assert result == "Allemagne"
+
+    def test_locality_search_term(self):
+        """should return locality address component"""
+        response = GMAP.get_geocode("Strasbourg")
+        result = GMAP.get_search_term(response)
+        assert result == "Strasbourg"
 
     def test_empty_address(self, exp_params):
         """should intercept error before sending request"""

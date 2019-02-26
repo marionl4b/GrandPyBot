@@ -32,5 +32,6 @@ class Parser:
             stopwords = list(data)
             parsed_message = [x for x in parse_msg if x not in stopwords]
             if len(parsed_message) != 0:
+                parsed_message = " ".join(parsed_message)
                 return parsed_message
         return None

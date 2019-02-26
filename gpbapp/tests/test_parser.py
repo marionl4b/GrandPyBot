@@ -19,7 +19,7 @@ class TestParser:
         parsed_message = self.PARSER.parse_usermsg({"userMessage": "Salut GrandPy ! "
                                                                    "Est-ce que tu connais "
                                                                    "l'adresse d'OpenClassrooms"})
-        assert parsed_message == ["openclassrooms"]
+        assert parsed_message == "openclassrooms"
 
     def test_punctuation(self):
         """should return none if all char are punctuation"""
