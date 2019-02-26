@@ -12,7 +12,7 @@ class GetWiki:
 
     def get_summary(self, data):
         try:
-            return summary(data)
+            return summary(data, sentences=2)
         except (PageError, DisambiguationError):
             return None
 
